@@ -48,7 +48,7 @@ for i in range(len(neglist)):
     negimg = io.imread(osp.join('E:/dataset/INRIA Person Dataset/person_1/INRIAPerson/Train/neg', neglist[i]))
     negimg = cv2.cvtColor(negimg, cv2.COLOR_RGBA2BGR)
 
-    # 在每张negimg图像中截取10张标准大小的图片作为负样本
+    # 在每张neg_img图像中截取10张标准大小的图片作为负样本
     for j in range(10):
         y = int(random.random() * (negimg.shape[0] - 128))
         x = int(random.random() * (negimg.shape[1] - 64))
