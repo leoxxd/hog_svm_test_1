@@ -63,9 +63,9 @@ hog_list = np.float32(hog_list)
 label_list = np.int32(label_list).reshape(len(label_list), 1)
 
 # 训练SVM，并在Test上测试
-clf = SVC(C=1.0, gamma='auto', kernel='rbf', probability=True)
+clf = SVC(C=1.0, gamma='auto', kernel='poly', probability=True)
 clf.fit(hog_list.squeeze(), label_list.squeeze())
-joblib.dump(clf, "E:/hog_svm_test1/result_hog/trained_svm.m")
+joblib.dump(clf, "E:/hog_svm_test1/result_hog/trained_svm4.m")
 
 # 提取训练集样本和标签
 test_hog = []
@@ -99,26 +99,26 @@ clf = joblib.load("E:/hog_svm_test1/result_hog/trained_svm.m")
 # 对训练集进行预测并绘制PR、ROC曲线计算AUC值
 prob = clf.predict_proba(test_hog.squeeze())[:, 1]
 
-precision, recall, thresholds_1 = metrics.precision_recall_curve(test_label.squeeze(), prob)
-
-plt.figure(figsize=(20, 20), dpi=100)
-plt.plot(precision, recall, c='red')
-plt.scatter(precision, recall, c='blue')
-plt.xlabel("precision", fontdict={'size': 16})
-plt.ylabel("recall", fontdict={'size': 16})
-plt.title("PR_curve", fontdict={'size': 20})
-plt.savefig('E:/hog_svm_test1/PR.png', dpi=300)
+# precision, recall, thresholds_1 = metrics.precision_recall_curve(test_label.squeeze(), prob)
+#
+# plt.figure(figsize=(20, 20), dpi=100)
+# plt.plot(precision, recall, c='red')
+# plt.scatter(precision, recall, c='blue')
+# plt.xlabel("precision", fontdict={'size': 16})
+# plt.ylabel("recall", fontdict={'size': 16})
+# plt.title("PR_curve", fontdict={'size': 20})
+# plt.savefig('E:/hog_svm_test1/PR.png', dpi=300)
 Ap = metrics.average_precision_score(test_label.squeeze(), prob)
-
-fpr, tpr, thresholds_2 = metrics.roc_curve(test_label.squeeze(), prob, pos_label=1)
-
-plt.figure(figsize=(20, 20), dpi=100)
-plt.plot(fpr, tpr, c='red')
-plt.scatter(fpr, tpr, c='blue')
-plt.xlabel("FPR", fontdict={'size': 16})
-plt.ylabel("TPR", fontdict={'size': 16})
-plt.title("ROC_curve", fontdict={'size': 20})
-plt.savefig('E:/hog_svm_test1/ROC.png', dpi=300)
+#
+# fpr, tpr, thresholds_2 = metrics.roc_curve(test_label.squeeze(), prob, pos_label=1)
+#
+# plt.figure(figsize=(20, 20), dpi=100)
+# plt.plot(fpr, tpr, c='red')
+# plt.scatter(fpr, tpr, c='blue')
+# plt.xlabel("FPR", fontdict={'size': 16})
+# plt.ylabel("TPR", fontdict={'size': 16})
+# plt.title("ROC_curve", fontdict={'size': 20})
+# plt.savefig('E:/hog_svm_test1/ROC.png', dpi=300)
 
 AUC = metrics.roc_auc_score(test_label.squeeze(), prob)
 print(AUC)

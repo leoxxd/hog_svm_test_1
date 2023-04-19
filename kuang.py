@@ -3,7 +3,7 @@ import cv2 as cv
 # 主程序入口
 if __name__ == '__main__':
     # 读取图像
-    src = cv.imread("E:/dataset/INRIA Person Dataset/person_1/INRIAPerson/Train/pos/crop001046.png")
+    src = cv.imread("E:/dataset/INRIA Person Dataset/person_1/INRIAPerson/Train/pos/crop_000010.png")
     cv.imshow("input", src)
     # HOG + SVM
     hog = cv.HOGDescriptor()
